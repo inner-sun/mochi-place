@@ -1,0 +1,26 @@
+{
+	"nodes":[
+		{"id":"a6bd7f5444d1e0ff","type":"text","text":"Client","x":-540,"y":-240,"width":250,"height":60,"color":"4"},
+		{"id":"3fb347543fc9a84d","type":"text","text":"Server","x":-540,"y":40,"width":250,"height":60,"color":"6"},
+		{"id":"769e4bb8a346de1e","type":"text","text":"Array of PixelDiff","x":-540,"y":-100,"width":250,"height":60},
+		{"id":"c8e04e7443b9143e","type":"text","text":"Buffer of PixelDiff\nfrom all users","x":-160,"y":40,"width":250,"height":60},
+		{"id":"c48e0b9748696523","type":"text","text":"BatchedPixelDiff","x":-160,"y":220,"width":250,"height":60},
+		{"id":"6e562e9ec1c22abd","type":"text","text":"User update","x":-540,"y":400,"width":250,"height":60},
+		{"id":"6e02c78140a7cb6b","type":"text","text":"Array of PixelDiff\nrepresenting the whole Canvas","x":200,"y":40,"width":250,"height":90},
+		{"id":"63cb2e517e203a84","type":"text","text":"New Canvas update","x":200,"y":400,"width":250,"height":60},
+		{"id":"335ca2503ef48a35","x":-160,"y":-240,"width":250,"height":96,"type":"text","text":"On first connection\nAsks for initial canvas and current buffer"}
+	],
+	"edges":[
+		{"id":"fac70eb8c658ca6f","fromNode":"a6bd7f5444d1e0ff","fromSide":"bottom","toNode":"769e4bb8a346de1e","toSide":"top","label":"creates"},
+		{"id":"7a260a5af1913cf9","fromNode":"769e4bb8a346de1e","fromSide":"bottom","toNode":"3fb347543fc9a84d","toSide":"top","label":"receives"},
+		{"id":"bf511a19bbdbc198","fromNode":"3fb347543fc9a84d","fromSide":"right","toNode":"c8e04e7443b9143e","toSide":"left","label":"builds"},
+		{"id":"36a1577e74a16913","fromNode":"c8e04e7443b9143e","fromSide":"bottom","toNode":"c48e0b9748696523","toSide":"top","label":"after X ms OR\nafter N PixelDiff received"},
+		{"id":"827e7ccf60fc41f0","fromNode":"c48e0b9748696523","fromSide":"bottom","toNode":"6e562e9ec1c22abd","toSide":"top"},
+		{"id":"70fc23456316f266","fromNode":"c48e0b9748696523","fromSide":"bottom","toNode":"63cb2e517e203a84","toSide":"top"},
+		{"id":"e21310eb30da0fad","fromNode":"6e562e9ec1c22abd","fromSide":"left","toNode":"a6bd7f5444d1e0ff","toSide":"left","label":"updates"},
+		{"id":"4e9bf567b6d969d5","fromNode":"63cb2e517e203a84","fromSide":"right","toNode":"6e02c78140a7cb6b","toSide":"right","label":"updates"},
+		{"id":"262d726fe435ad94","fromNode":"a6bd7f5444d1e0ff","fromSide":"right","toNode":"335ca2503ef48a35","toSide":"left"},
+		{"id":"051edd64b23af4b3","fromNode":"335ca2503ef48a35","fromSide":"right","toNode":"6e02c78140a7cb6b","toSide":"top","fromEnd":"arrow"},
+		{"id":"d178294a528369f0","fromNode":"335ca2503ef48a35","fromSide":"bottom","toNode":"c8e04e7443b9143e","toSide":"top","fromEnd":"arrow"}
+	]
+}
