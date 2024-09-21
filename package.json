@@ -1,10 +1,16 @@
 {
   "dependencies": {
+    "concurrently": "^9.0.1",
     "tsx": "^4.19.1",
     "vite": "^5.4.5",
     "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/ws": "^8.5.12"
+  },
+  "scripts": {
+    "server": "yarn tsx server/index.ts",
+    "client": "yarn vite --host",
+    "dev": "yarn concurrently --names server,client 'yarn server' 'yarn client'"
   }
 }
