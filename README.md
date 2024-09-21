@@ -10,6 +10,6 @@ Any device on the same network should be able to connect to your machine.
 
 ## Documentation
 
-Documentation and ideas in [docs].
+Documentation and ideas in [docs](docs).
 
 Open `/docs` with [Obsidian](https://obsidian.md/) to see node graphs and for a better experience.
