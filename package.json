@@ -1,16 +1,28 @@
 {
+  "name": "example-basic",
+  "type": "module",
+  "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start",
+    "version": "vinxi version",
+    "server": "yarn tsx server/index.ts"
+  },
   "dependencies": {
-    "concurrently": "^9.0.1",
-    "tsx": "^4.19.1",
-    "vite": "^5.4.5",
+    "@solidjs/meta": "^0.29.4",
+    "@solidjs/router": "^0.15.0",
+    "@solidjs/start": "^1.0.10",
+    "concurrently": "^9.1.0",
+    "sass": "^1.82.0",
+    "solid-js": "^1.9.2",
+    "tsx": "^4.19.2",
+    "vinxi": "^0.4.3",
     "ws": "^8.18.0"
   },
-  "devDependencies": {
-    "@types/ws": "^8.5.12"
+  "engines": {
+    "node": ">=18"
   },
-  "scripts": {
-    "server": "yarn tsx server/index.ts",
-    "client": "yarn vite --host",
-    "dev": "yarn concurrently --names server,client 'yarn server' 'yarn client'"
+  "devDependencies": {
+    "@types/ws": "^8.5.13"
   }
 }
