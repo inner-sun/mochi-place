@@ -10,12 +10,14 @@ export interface Change{
 }
 
 export default class Editor{
+  container: HTMLDivElement
   pencil: Pencil
   controls: Controls
   canvas: Canvas
   changes: Change[]
 
   constructor(canvasElement: HTMLCanvasElement){
+    this.container = canvasElement.parentElement as HTMLDivElement
     this.pencil = new Pencil
     this.controls = new Controls(canvasElement)
     this.canvas = new Canvas({
@@ -84,15 +86,34 @@ export default class Editor{
         event.x - this.pencil.initialCoords.x,
         event.y - this.pencil.initialCoords.y
       )
-      const canvasOffset = new Point(
-        this.controls.canvasTransform.pan.x + this.pencil.offsetCoords.x,
-        this.controls.canvasTransform.pan.y + this.pencil.offsetCoords.y
-      )
-      this.canvas.element.parentElement.style.transform = `translate(${canvasOffset.x}px, ${canvasOffset.y}px)`
     }
   }
 
+  onWheel(event: WheelEvent){
+    event.preventDefault()
+    if(event.ctrlKey){
+      // Zoom
+      const newZoom = this.controls.canvasTransform.zoom + (event.deltaY * -0.01)
+      this.controls.canvasTransform.zoom = newZoom < 0.5 ? 0.5 : newZoom
+    }else{
+      // Touchpad panning
+      this.controls.canvasTransform.pan.set(
+        this.controls.canvasTransform.pan.x + event.deltaX,
+        this.controls.canvasTransform.pan.y + event.deltaY
+      )
+    }
+  }
+
+  applyTransform(){
+    const canvasOffset = new Point(
+      this.controls.canvasTransform.pan.x + this.pencil.offsetCoords.x,
+      this.controls.canvasTransform.pan.y + this.pencil.offsetCoords.y
+    )
+    this.container.style.transform = `scale(${this.controls.canvasTransform.zoom}) translate(${canvasOffset.x}px, ${canvasOffset.y}px)`
+  }
+
   update(){
+    this.applyTransform()
     this.canvas.applyChanges(this.changes)
     this.changes = []
     this.canvas.draw()
@@ -103,5 +124,6 @@ export default class Editor{
     window.addEventListener('pointerdown', (e) => this.onPointerDown(e))
     window.addEventListener('pointerup', (e) => this.onPointerUp(e))
     window.addEventListener('pointermove', (e) => this.onPointerMove(e))
+    window.addEventListener('wheel', (e) => this.onWheel(e), { passive: false })
   }
 }
