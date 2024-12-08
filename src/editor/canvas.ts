@@ -1,3 +1,4 @@
+import { colors } from '~/editor/colors'
 import Editor, { Change } from '~/editor/editor'
 
 interface CanvasProps{
@@ -22,7 +23,7 @@ export default class Canvas{
     this.bufferCanvas = new OffscreenCanvas(this.element.width, this.element.height)
     this.bufferContext = this.bufferCanvas.getContext('2d') as OffscreenCanvasRenderingContext2D
     // Initial draw
-    this.bufferContext.fillStyle = "white"
+    this.bufferContext.fillStyle = colors[0]
     this.bufferContext.fillRect(0, 0, this.element.width, this.element.height)
   }
 

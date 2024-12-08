@@ -12,7 +12,8 @@
   width: var(--size);
   height: var(--size);
   background-color: var(--swatch-0);
-  box-shadow: 0 0 var(--spacing-16) 0 rgba(0,0,0,0.33);
+  box-shadow: 0 0 var(--spacing-16) 0 rgba(0,0,0,0.50);
+  outline: 2px solid var(--swatch-0);
 }
 
 .canvas{

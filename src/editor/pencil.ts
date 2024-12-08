@@ -1,3 +1,4 @@
+import { colors } from '~/editor/colors'
 import Point from '~/editor/point'
 
 export default class Pencil{
@@ -9,7 +10,7 @@ export default class Pencil{
   isDown: boolean
 
   constructor(){
-    this.color = 'black'
+    this.color = colors[1]
     this.size = 1
     this.initialCoords = new Point(0,0)
     this.offsetCoords = new Point(0,0)
