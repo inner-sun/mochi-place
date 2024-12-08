@@ -6,4 +6,9 @@ export default class Point{
     this.x = x
     this.y = y
   }
+
+  set(x: number, y: number){
+    this.x = x
+    this.y = y
+  }
 }

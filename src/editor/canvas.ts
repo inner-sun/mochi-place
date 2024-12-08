@@ -1,5 +1,4 @@
 import Editor, { Change } from '~/editor/editor'
-import Point from '~/editor/point'
 
 interface CanvasProps{
   canvasElement: HTMLCanvasElement
@@ -40,9 +39,10 @@ export default class Canvas{
     changes.forEach(change => {
       this.bufferContext.fillStyle = change.color
       const pencil = change
+      const pencilOffset = pencil.size === 1 ? 0 : pencil.size / 2
       this.bufferContext.fillRect(
-        pencil.coords.x - pencil.size / 2,
-        pencil.coords.y - pencil.size / 2,
+        pencil.coords.x - pencilOffset,
+        pencil.coords.y - pencilOffset,
         pencil.size,
         pencil.size
       )
@@ -56,9 +56,10 @@ export default class Canvas{
   drawPencilPreview(){
     this.context.fillStyle = this.editor.pencil.color
     const pencil = this.editor.pencil
+    const pencilOffset = pencil.size === 1 ? 0 : pencil.size / 2
     this.context.fillRect(
-      pencil.coords.x - pencil.size / 2,
-      pencil.coords.y - pencil.size / 2,
+      pencil.coords.x - pencilOffset,
+      pencil.coords.y - pencilOffset,
       pencil.size,
       pencil.size
     )
