@@ -1,10 +1,10 @@
 import { Component } from 'solid-js'
 import styles from '~/components/canvas/canvas.module.scss'
-import CanvasHandler from '~/editor/canvas'
+import Editor from '~/editor/editor'
 
 const Canvas: Component = () => {
   const onCanvasReady = (element: HTMLCanvasElement) => {
-    new CanvasHandler(element)
+    new Editor(element)
   }
 
   return (
