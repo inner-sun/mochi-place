@@ -1,4 +1,5 @@
 import { colors } from '~/editor/colors'
+import { MOUSE } from '~/editor/controls'
 import Editor, { Change } from '~/editor/editor'
 
 interface CanvasProps{
@@ -55,7 +56,10 @@ export default class Canvas{
   }
 
   drawPencilPreview(){
-    this.context.fillStyle = this.editor.pencil.color
+    const colorToPreview = this.editor.pencil.activeKey === MOUSE.LEFT
+      ? this.editor.pencil.primaryColor
+      : this.editor.pencil.secondaryColor
+    this.context.fillStyle = colorToPreview
     const pencil = this.editor.pencil
     const pencilOffset = pencil.size === 1 ? 0 : pencil.size / 2
     this.context.fillRect(

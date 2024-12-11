@@ -1,3 +1,4 @@
+import { editorState } from '~/components/editor/editor'
 import Canvas from '~/editor/canvas'
 import { Controls, MOUSE } from '~/editor/controls'
 import Pencil from '~/editor/pencil'
@@ -37,9 +38,20 @@ export default class Editor{
 
     if(event.button === MOUSE.LEFT){
       this.pencil.isDown = true
+      this.pencil.activeKey = MOUSE.LEFT
       this.changes.push({
         coords: this.pencil.coords,
-        color: this.pencil.color,
+        color: this.pencil.primaryColor,
+        size: this.pencil.size
+      })
+    }
+
+    if(event.button === MOUSE.RIGHT){
+      this.pencil.isDown = true
+      this.pencil.activeKey = MOUSE.RIGHT
+      this.changes.push({
+        coords: this.pencil.coords,
+        color:  editorState.secondaryColor,
         size: this.pencil.size
       })
     }
@@ -49,10 +61,9 @@ export default class Editor{
     }
   }
 
-  onPointerUp(event: PointerEvent){
-    if(event.button === MOUSE.LEFT){
-      this.pencil.isDown = false
-    }
+  onPointerUp(event: PointerEvent) {
+    this.pencil.isDown = false
+    this.pencil.activeKey = MOUSE.LEFT
 
     if(event.button === MOUSE.WHEEL){
       this.controls.panning = false
@@ -73,9 +84,12 @@ export default class Editor{
 
     // If pointer is down, queue pixel changes
     if(this.pencil.isDown){
+      const colorToApply = this.pencil.activeKey === MOUSE.LEFT 
+        ? this.pencil.primaryColor 
+        : this.pencil.secondaryColor
       this.changes.push({
         coords: this.pencil.coords,
-        color: this.pencil.color,
+        color: colorToApply,
         size: this.pencil.size
       })
     }
@@ -121,6 +135,7 @@ export default class Editor{
   }
 
   registerEventListeners(){
+    window.addEventListener('contextmenu', (e) => e.preventDefault())
     window.addEventListener('pointerdown', (e) => this.onPointerDown(e))
     window.addEventListener('pointerup', (e) => this.onPointerUp(e))
     window.addEventListener('pointermove', (e) => this.onPointerMove(e))

@@ -1,11 +1,18 @@
-import { Component } from 'solid-js'
+import { Component, createEffect } from 'solid-js'
 import styles from '~/components/canvas/canvas.module.scss'
+import { editorState } from '~/components/editor/editor'
 import Editor from '~/editor/editor'
 
 const Canvas: Component = () => {
+  let editor!: Editor
   const onCanvasReady = (element: HTMLCanvasElement) => {
-    new Editor(element)
+    editor = new Editor(element)
   }
+
+  createEffect(() => {
+    editor.pencil.primaryColor = editorState.primaryColor
+    editor.pencil.secondaryColor = editorState.secondaryColor
+  })
 
   return (
     <div class={styles.canvasContainer}>

@@ -13,6 +13,19 @@
   outline: 4px solid var(--swatch-0);
 }
 
+.colorContainer{
+  position: relative;
+}
+
+.colorState{
+  --size: 24px;
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  top: calc(-0.9 * var(--size));
+  left: calc(50% - var(--size) / 2);
+}
+
 .color{
   width: var(--spacing-16);
   height: var(--spacing-16);
