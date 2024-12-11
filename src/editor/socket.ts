@@ -2,7 +2,6 @@ import { colors } from '~/editor/colors'
 import Editor, { Change } from '~/editor/editor'
 import { packPixel, unpackPixel } from '~/editor/pixels'
 import Point from '~/editor/point'
-import { canvasSize } from '~/editor/settings'
 
 export class Socket{
   editor: Editor
@@ -19,8 +18,6 @@ export class Socket{
   }
 
   getPackedMessage(changes: Uint8Array[]){
-    console.log(`Packing ${changes.length} changes`)
-
     const totalLength = changes.reduce((acc, change) => acc + change.length, 0)
     const packedMessage = new Uint8Array(totalLength)
     let offset = 0
@@ -53,37 +50,31 @@ export class Socket{
   }
 
   sendChanges(){
+    console.log(`Websocket: Sending ${this.queue.length} updates`)
     const message = this.getPackedMessage(this.queue)
     this.webSocket.send(message)
     this.queue = []
-    console.log("Websocket: Sending Update")
   }
 
   async onReceive(event: MessageEvent){
-    console.log('Websocket: Message', event)
     const data: Blob = event.data
     const buffer  = await data.arrayBuffer()
     const packedMessage = new Uint8Array(buffer)
     const count = packedMessage.length / 3
-    console.log('data', event.data)
-    console.log(count, 'changes')
-
     const changes: Change[] = []
-
+    
     for(let i = 0; i < count; i++){
       const index = 3 * i
       const packedPixel = packedMessage.slice(index, index + 3)
       const change = unpackPixel(packedPixel)
-      console.log('Change', i, change)
       changes.push({
         color: colors[change.colorIndex],
         coords: new Point(change.x, change.y),
         size: 1
       })
     }
-
-    console.log(changes)
-
+    
+    console.log(`Websocket: Received ${changes.length} updates`)
     this.editor.queueChange(changes)
   }
 

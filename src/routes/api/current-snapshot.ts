@@ -1,15 +1,9 @@
 import { readFile } from "node:fs/promises"
 import path from "path"
-import { randomCanvas } from '~/server/init-canvas'
 
 export async function GET() {
-  // const filePath = path.join(process.cwd(), "public", "snapshot.bin")
-  // console.log(filePath)
-
-  // const snapshot = await readFile(filePath)
-  // console.log(snapshot.byteLength)
-
-  const snapshot = randomCanvas()
+  const filePath = path.join(process.cwd(), "public", "snapshot.bin")
+  const snapshot = await readFile(filePath)
 
   return new Response(snapshot, {
     headers: {

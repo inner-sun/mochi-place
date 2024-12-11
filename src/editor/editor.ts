@@ -30,7 +30,7 @@ export default class Editor{
     })
     this.changes = []
     this.registerEventListeners()
-    // this.init()
+    this.init()
     this.update()
   }
 
