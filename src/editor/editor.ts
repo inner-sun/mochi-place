@@ -5,8 +5,6 @@ import Pencil from '~/editor/pencil'
 import Point from '~/editor/point'
 import { Socket } from '~/editor/socket'
 
-export const canvasSize = 32
-
 export interface Change{
   coords: Point
   color: string
@@ -32,7 +30,7 @@ export default class Editor{
     })
     this.changes = []
     this.registerEventListeners()
-    this.init()
+    // this.init()
     this.update()
   }
 
@@ -53,8 +51,11 @@ export default class Editor{
     this.socket.appendChange(change)
   }
 
-  queueChange(change: Change){
-    this.changes.push(change)
+  queueChange(changes: Change | Change[]){
+    if(!Array.isArray(changes)){
+      changes = [changes]
+    }
+    this.changes.push(...changes)
   }
 
   onPointerDown(event: PointerEvent){

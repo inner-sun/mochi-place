@@ -1,7 +1,8 @@
 import { colors } from '~/editor/colors'
 import { MOUSE } from '~/editor/controls'
-import Editor, { canvasSize, Change } from '~/editor/editor'
+import Editor, { Change } from '~/editor/editor'
 import { createImageData, packPixel } from '~/editor/pixels'
+import { canvasSize } from '~/editor/settings'
 
 interface CanvasProps{
   canvasElement: HTMLCanvasElement
@@ -62,7 +63,7 @@ export default class Canvas{
         for (let x = startX; x < startX + pencil.size; x++) {
           const index = (y * canvasSize + x) * 3
           let colorIndex = colors.findIndex(color => color === change.color)
-          if(colorIndex === -1) colorIndex = 0
+          if (colorIndex === -1) colorIndex = 0
           const packedPixel = packPixel(change.coords.x, change.coords.y, colorIndex)
           this.buffer.set(packedPixel, index)
         }
