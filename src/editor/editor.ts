@@ -3,6 +3,9 @@ import Canvas from '~/editor/canvas'
 import { Controls, MOUSE } from '~/editor/controls'
 import Pencil from '~/editor/pencil'
 import Point from '~/editor/point'
+import { Socket } from '~/editor/socket'
+
+export const canvasSize = 32
 
 export interface Change{
   coords: Point
@@ -14,6 +17,7 @@ export default class Editor{
   container: HTMLDivElement
   pencil: Pencil
   controls: Controls
+  socket: Socket
   canvas: Canvas
   changes: Change[]
 
@@ -21,13 +25,36 @@ export default class Editor{
     this.container = canvasElement.parentElement as HTMLDivElement
     this.pencil = new Pencil
     this.controls = new Controls(canvasElement)
+    this.socket = new Socket(this)
     this.canvas = new Canvas({
       canvasElement,
       editor: this
     })
     this.changes = []
     this.registerEventListeners()
+    this.init()
     this.update()
+  }
+
+  async fetchLatestSnapshot(){
+    const query = await fetch(`${import.meta.env.VITE_API}/current-snapshot`)
+    const data = await query.arrayBuffer()
+    return new Uint8Array(data)
+  }
+
+  async init(){
+    const packedPixels = await this.fetchLatestSnapshot()
+    this.canvas.updateBuffer(packedPixels)
+  }
+
+  // TODO: Fix identic changes getting queued
+  queueUserChange(change: Change){
+    this.queueChange(change)
+    this.socket.appendChange(change)
+  }
+
+  queueChange(change: Change){
+    this.changes.push(change)
   }
 
   onPointerDown(event: PointerEvent){
@@ -39,7 +66,7 @@ export default class Editor{
     if(event.button === MOUSE.LEFT){
       this.pencil.isDown = true
       this.pencil.activeKey = MOUSE.LEFT
-      this.changes.push({
+      this.queueUserChange({
         coords: this.pencil.coords,
         color: this.pencil.primaryColor,
         size: this.pencil.size
@@ -49,7 +76,7 @@ export default class Editor{
     if(event.button === MOUSE.RIGHT){
       this.pencil.isDown = true
       this.pencil.activeKey = MOUSE.RIGHT
-      this.changes.push({
+      this.queueUserChange({
         coords: this.pencil.coords,
         color:  editorState.secondaryColor,
         size: this.pencil.size
@@ -87,7 +114,7 @@ export default class Editor{
       const colorToApply = this.pencil.activeKey === MOUSE.LEFT 
         ? this.pencil.primaryColor 
         : this.pencil.secondaryColor
-      this.changes.push({
+      this.queueUserChange({
         coords: this.pencil.coords,
         color: colorToApply,
         size: this.pencil.size

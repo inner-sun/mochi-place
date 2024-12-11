@@ -8,25 +8,21 @@ const getToggleState = () => JSON.stringify({ toggleValue })
 
 const updateUsers = () => {
   wss.clients.forEach(client => {
-    client.send(getToggleState())
+    // client.send(getToggleState())
   })
 }
 
-wss.on('connection', function connection(ws) {
+wss.on('connection', (ws) => {
   console.log('New User')
 
   ws.on('error', console.error)
 
-  // On new toggleValue from any users
-  // -> Update server value
-  // -> Notify users
-  ws.on('message', function message(data) {
-    const { toggleValue: receivedToggleValue } = JSON.parse(data.toString()) as { toggleValue: boolean }
-    toggleValue = receivedToggleValue
-    console.log({ toggleValue })
+  // On User update
+  ws.on('message', (data) => {
+    // unpack pixels from data
+    // queue them to changes waiting to be broadcast
+    console.log('Receieved packed pixels', data)
+    // update `updateUsers()` to send clients only the changes they didn't do
     updateUsers()
   })
-
-  // Init new user with current toggleValue
-  ws.send(getToggleState())
 })
