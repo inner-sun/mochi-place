@@ -59,31 +59,33 @@ export default class Editor{
   }
 
   onPointerDown(event: PointerEvent){
-    this.pencil.initialCoords.set(
-      event.x,
-      event.y
-    )
+    if(event.target === this.canvas.element){
+      this.pencil.initialCoords.set(
+        event.x,
+        event.y
+      )
 
-    if(event.button === MOUSE.LEFT){
-      this.pencil.isDown = true
-      this.pencil.activeKey = MOUSE.LEFT
-      this.queueUserChange({
-        coords: this.pencil.coords,
-        color: this.pencil.primaryColor,
-        size: this.pencil.size
-      })
+      if (event.button === MOUSE.LEFT) {
+        this.pencil.isDown = true
+        this.pencil.activeKey = MOUSE.LEFT
+        this.queueUserChange({
+          coords: this.pencil.coords,
+          color: this.pencil.primaryColor,
+          size: this.pencil.size
+        })
+      }
+
+      if (event.button === MOUSE.RIGHT) {
+        this.pencil.isDown = true
+        this.pencil.activeKey = MOUSE.RIGHT
+        this.queueUserChange({
+          coords: this.pencil.coords,
+          color: editorState.secondaryColor,
+          size: this.pencil.size
+        })
+      }
     }
 
-    if(event.button === MOUSE.RIGHT){
-      this.pencil.isDown = true
-      this.pencil.activeKey = MOUSE.RIGHT
-      this.queueUserChange({
-        coords: this.pencil.coords,
-        color:  editorState.secondaryColor,
-        size: this.pencil.size
-      })
-    }
-    
     if(event.button === MOUSE.WHEEL){
       this.controls.panning = true
     }
