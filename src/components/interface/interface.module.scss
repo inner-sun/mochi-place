@@ -5,12 +5,18 @@
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: var(--spacing-16);
   padding: var(--spacing-16);
   background: var(--swatch-0);
   border: 2px solid var(--swatch-900);
   outline: 4px solid var(--swatch-0);
+
+  header{
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-16);
+  }
 }
 
 .title{
@@ -25,4 +31,20 @@
   width: var(--spacing-16);
   height: var(--spacing-16);
   image-rendering: pixelated;
+}
+
+.button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover{
+    cursor: pointer;
+  }
+
+  .icon{
+    width: var(--spacing-24);
+    height: var(--spacing-24);
+    color: var(--swatch-900);
+  }
 }

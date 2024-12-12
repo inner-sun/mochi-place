@@ -1,0 +1,25 @@
+.manual{
+  font-size: var(--font-300);
+  line-height: var(--spacing-24);
+  color: var(--swatch-700);
+
+  ul{
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-16);
+  }
+}
+
+.shortcut{
+  background-color: var(--swatch-900);
+  border-radius: 4px;
+  padding: 4px 8px;
+  color: var(--swatch-0);
+  margin-right: var(--spacing-16);
+}
+
+.symbol{
+  display: inline-block;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+}
