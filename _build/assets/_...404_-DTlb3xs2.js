@@ -1,2 +1,0 @@
-import{q as m,D as o,x as a,j as i,z as d}from"./web-BVNkkRQA.js";import{T as u,H as x}from"./HttpStatusCode-CK3SltJS.js";var _=d("<main><!$><!/><!$><!/><h1>Page Not Found");function c(){return(()=>{var e=m(_),r=e.firstChild,[t,l]=o(r.nextSibling),s=t.nextSibling,[n,$]=o(s.nextSibling);return n.nextSibling,a(e,i(u,{children:"Not Found"}),t,l),a(e,i(x,{code:404}),n,$),e})()}export{c as default};
-//# sourceMappingURL=_...404_-DTlb3xs2.js.map
