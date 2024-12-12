@@ -6,13 +6,15 @@
     "build": "vinxi build",
     "start": "vinxi start",
     "version": "vinxi version",
-    "server": "yarn tsx server/index.ts"
+    "server": "yarn tsx server/index.ts",
+    "deploy": "yarn build && gh-pages -d .output/public"
   },
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.0",
     "@solidjs/start": "^1.0.10",
     "concurrently": "^9.1.0",
+    "gh-pages": "^6.2.0",
     "sass": "^1.82.0",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.9.2",

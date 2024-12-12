@@ -1,4 +1,6 @@
 node_modules
+.output
+.vinxi
 .DS_Store
 .obsidian
 .env.local
