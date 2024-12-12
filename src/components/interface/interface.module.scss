@@ -1,4 +1,4 @@
-.interface{
+.interface, .mobileInterface{
   position: fixed;
   z-index: 1;
   top: var(--spacing-16);
@@ -42,5 +42,12 @@
     width: var(--spacing-24);
     height: var(--spacing-24);
     color: var(--swatch-900);
+  }
+}
+
+@media screen and (max-width: 512px) {
+  .mobileInterface{
+    position: static;
+    transform: none;
   }
 }

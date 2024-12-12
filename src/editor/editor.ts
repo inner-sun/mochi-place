@@ -3,6 +3,7 @@ import Canvas from '~/editor/canvas'
 import { Controls, MOUSE } from '~/editor/controls'
 import Pencil from '~/editor/pencil'
 import Point from '~/editor/point'
+import { isMobile } from '~/editor/settings'
 import { Socket } from '~/editor/socket'
 
 export interface Change{
@@ -173,12 +174,14 @@ export default class Editor{
   }
 
   registerEventListeners(){
-    window.addEventListener('contextmenu', (e) => e.preventDefault())
-    window.addEventListener('pointerdown', (e) => this.onPointerDown(e))
-    window.addEventListener('pointerup', (e) => this.onPointerUp(e))
-    window.addEventListener('pointermove', (e) => this.onPointerMove(e))
-    window.addEventListener('wheel', (e) => this.onWheel(e), { passive: false })
-    window.addEventListener('keydown', (e) => this.onKeyDown(e))
-    window.addEventListener('keyup', (e) => this.onKeyUp(e))
+    if(!isMobile()){
+      window.addEventListener('contextmenu', (e) => e.preventDefault())
+      window.addEventListener('pointerdown', (e) => this.onPointerDown(e))
+      window.addEventListener('pointerup', (e) => this.onPointerUp(e))
+      window.addEventListener('pointermove', (e) => this.onPointerMove(e))
+      window.addEventListener('wheel', (e) => this.onWheel(e), { passive: false })
+      window.addEventListener('keydown', (e) => this.onKeyDown(e))
+      window.addEventListener('keyup', (e) => this.onKeyUp(e))
+    }
   }
 }

@@ -24,3 +24,14 @@
   image-rendering: pixelated;
   cursor: crosshair;
 }
+
+@media screen and (max-width: 512px){
+  .canvasContainer{
+    flex: 0 0 auto;
+  }
+  
+  .canvasWrapper{
+    --size: 95vw;
+    position: static;
+  }
+}

@@ -1,5 +1,11 @@
 .editor{
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-32) 0;
   width: 100vw;
   height: 100vh;
+  gap: var(--spacing-32);
+  background: url('/assets/images/gradient.png') no-repeat center bottom / 100% auto;
+  image-rendering: pixelated;
 }

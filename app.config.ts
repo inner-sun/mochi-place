@@ -3,6 +3,7 @@ import solidSvg from 'vite-plugin-solid-svg'
 import { undestructurePlugin } from 'babel-plugin-solid-undestructure'
 
 export default defineConfig({
+  ssr: false,
   vite() {
     return {
       build: {
