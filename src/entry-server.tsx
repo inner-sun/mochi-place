@@ -13,7 +13,7 @@ export default createHandler(() => (
           <meta property="og:title" content="MochiPlace" />
           <meta name="description" content="Pixel Art from the Mochi Gang" />
           <meta property="og:description" content="Pixel Art from the Mochi Gang" />
-          <meta property="og:image" content="./assets/images/preview.png" />
+          <meta property="og:image" content="http://www.innersun.fr/mochiplace/images/preview.png" />
           {assets}
         </head>
         <body>
