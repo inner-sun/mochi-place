@@ -2,7 +2,7 @@ import { Component } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import Canvas from '~/components/canvas/canvas'
 import styles from '~/components/editor/editor.module.scss'
-import Palette from '~/components/palette/palette'
+import Interface from '~/components/interface/interface'
 import { colors } from '~/editor/colors'
 
 export const [editorState, setEditor] = createStore({
@@ -14,7 +14,7 @@ export const [editorState, setEditor] = createStore({
 const Editor: Component = () => {
   return (
     <div class={styles.editor}>
-      <Palette />
+      <Interface />
       <Canvas />
     </div>
   )

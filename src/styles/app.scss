@@ -1,7 +1,10 @@
 @import "reset";
+@import "fonts";
 @import "variables";
 
 body{
-  background-color: black;
+  background-color: var(--swatch-100);
   overflow: hidden;
+  font-family: 'Pixigma', monospace;
+  color: var(--swatch-900);
 }

@@ -1,0 +1,28 @@
+.interface{
+  position: fixed;
+  z-index: 1;
+  top: var(--spacing-16);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16);
+  padding: var(--spacing-16);
+  background: var(--swatch-0);
+  border: 2px solid var(--swatch-900);
+  outline: 4px solid var(--swatch-0);
+}
+
+.title{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-300);
+}
+
+.logo{
+  display: block;
+  width: var(--spacing-16);
+  height: var(--spacing-16);
+  image-rendering: pixelated;
+}
