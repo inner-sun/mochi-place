@@ -59,12 +59,12 @@ export default class Editor{
   }
 
   onPointerDown(event: PointerEvent){
-    if(event.target === this.canvas.element){
-      this.pencil.initialCoords.set(
-        event.x,
-        event.y
-      )
+    this.pencil.initialCoords.set(
+      event.x,
+      event.y
+    )
 
+    if(event.target === this.canvas.element){
       if (event.button === MOUSE.LEFT && !this.controls.panToggle) {
         this.pencil.isDown = true
         this.pencil.activeKey = MOUSE.LEFT
@@ -127,6 +127,7 @@ export default class Editor{
 
     // If Panning, move canvas
     if(this.controls.panning){
+      console.log(event.y , this.pencil.initialCoords.y)
       this.pencil.offsetCoords.set(
         event.x - this.pencil.initialCoords.x,
         event.y - this.pencil.initialCoords.y

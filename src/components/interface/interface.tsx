@@ -15,7 +15,7 @@ const Interface: Component = () => {
         <div class={styles.title}>
           <img
             class={styles.logo}
-            src='/assets/images/logo.png'
+            src='./assets/images/logo.png'
             alt=''
           />
           <span>MochiPlace</span>

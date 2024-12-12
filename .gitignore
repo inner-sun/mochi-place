@@ -4,4 +4,6 @@ node_modules
 .DS_Store
 .obsidian
 .env.local
+.env.production
 public/snapshot*
+build
