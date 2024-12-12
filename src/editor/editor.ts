@@ -127,7 +127,6 @@ export default class Editor{
 
     // If Panning, move canvas
     if(this.controls.panning){
-      console.log(event.y , this.pencil.initialCoords.y)
       this.pencil.offsetCoords.set(
         event.x - this.pencil.initialCoords.x,
         event.y - this.pencil.initialCoords.y
