@@ -101,6 +101,7 @@ export default class Editor{
         this.controls.canvasTransform.pan.x + this.pencil.offsetCoords.x,
         this.controls.canvasTransform.pan.y + this.pencil.offsetCoords.y
       )
+      this.pencil.offsetCoords.set(0, 0)
     }
   }
 
