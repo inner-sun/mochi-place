@@ -15,7 +15,7 @@ const Editor: Component = () => {
   return (
     <div class={styles.editor}>
       <Interface />
-      {/* <Canvas /> */}
+      <Canvas />
     </div>
   )
 }
