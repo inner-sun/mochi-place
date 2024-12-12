@@ -35,7 +35,7 @@ export default class Editor{
   }
 
   async fetchLatestSnapshot(){
-    const query = await fetch(`${import.meta.env.VITE_API}/current-snapshot`)
+    const query = await fetch(`${import.meta.env.VITE_API}/api/canvas`)
     const data = await query.arrayBuffer()
     return new Uint8Array(data)
   }
