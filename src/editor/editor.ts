@@ -65,7 +65,7 @@ export default class Editor{
         event.y
       )
 
-      if (event.button === MOUSE.LEFT) {
+      if (event.button === MOUSE.LEFT && !this.controls.panToggle) {
         this.pencil.isDown = true
         this.pencil.activeKey = MOUSE.LEFT
         this.queueUserChange({
@@ -86,7 +86,7 @@ export default class Editor{
       }
     }
 
-    if(event.button === MOUSE.WHEEL){
+    if(event.button === MOUSE.WHEEL || this.controls.panToggle){
       this.controls.panning = true
     }
   }
@@ -95,7 +95,7 @@ export default class Editor{
     this.pencil.isDown = false
     this.pencil.activeKey = MOUSE.LEFT
 
-    if(event.button === MOUSE.WHEEL){
+    if(event.button === MOUSE.WHEEL || this.controls.panToggle){
       this.controls.panning = false
       this.controls.canvasTransform.pan.set(
         this.controls.canvasTransform.pan.x + this.pencil.offsetCoords.x,
@@ -136,16 +136,23 @@ export default class Editor{
 
   onWheel(event: WheelEvent){
     event.preventDefault()
-    if(event.ctrlKey){
+    const isTouch = event.deltaX > 0 && event.deltaY > 0
+    if (!isTouch){
       // Zoom
       const newZoom = this.controls.canvasTransform.zoom + (event.deltaY * -0.01)
       this.controls.canvasTransform.zoom = newZoom < 0.5 ? 0.5 : newZoom
-    }else{
-      // Touchpad panning
-      this.controls.canvasTransform.pan.set(
-        this.controls.canvasTransform.pan.x + event.deltaX,
-        this.controls.canvasTransform.pan.y + event.deltaY
-      )
+    }
+  }
+
+  onKeyDown(event: KeyboardEvent){
+    if(event.code === 'Space'){
+      this.controls.panToggle = true
+    }
+  }
+
+  onKeyUp(event: KeyboardEvent){
+    if (event.code === 'Space') {
+      this.controls.panToggle = false
     }
   }
 
@@ -171,5 +178,7 @@ export default class Editor{
     window.addEventListener('pointerup', (e) => this.onPointerUp(e))
     window.addEventListener('pointermove', (e) => this.onPointerMove(e))
     window.addEventListener('wheel', (e) => this.onWheel(e), { passive: false })
+    window.addEventListener('keydown', (e) => this.onKeyDown(e))
+    window.addEventListener('keyup', (e) => this.onKeyUp(e))
   }
 }

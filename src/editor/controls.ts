@@ -13,6 +13,7 @@ interface CanvasTransform{
 
 class Controls{
   panning: boolean
+  panToggle: boolean
   canvasTransform: CanvasTransform
 
   constructor(canvasElement: HTMLCanvasElement){
@@ -21,6 +22,7 @@ class Controls{
       zoom: 1
     }
     this.panning = false
+    this.panToggle = false
   }
 }
 
