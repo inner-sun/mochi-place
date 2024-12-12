@@ -1,11 +1,11 @@
-import { TbHelp, TbHelpCircle } from 'solid-icons/tb'
+import { TbHelp } from 'solid-icons/tb'
 import { Component, createSignal, Show } from 'solid-js'
 import styles from '~/components/interface/interface.module.scss'
 import Manual from '~/components/manual/manual'
 import Palette from '~/components/palette/palette'
 
 const Interface: Component = () => {
-  const [showManual, setManual] = createSignal(false)
+  const [showManual, setManual] = createSignal(true)
 
   const toggleManual = () => setManual(value => !value)
  
@@ -32,7 +32,7 @@ const Interface: Component = () => {
       </header>
 
       <Show when={showManual()}>
-        <Manual />
+        <Manual setManual={setManual} />
       </Show>
     </div>
   )

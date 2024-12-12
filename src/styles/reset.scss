@@ -145,6 +145,10 @@ button{
   border: none;
   background: none;
   padding: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 *{

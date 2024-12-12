@@ -5,6 +5,9 @@
 body{
   background-color: var(--swatch-100);
   overflow: hidden;
-  font-family: 'Pixigma', monospace;
   color: var(--swatch-900);
+}
+
+*{
+  font-family: 'Pixigma', monospace;
 }

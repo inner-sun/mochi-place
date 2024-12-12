@@ -1,3 +1,3 @@
 export interface ManualProps {
-  prop: string
+  setManual: (value: boolean) => void
 }
