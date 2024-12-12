@@ -1,3 +1,4 @@
+import { makePersisted } from '@solid-primitives/storage'
 import { TbHelp } from 'solid-icons/tb'
 import { Component, createSignal, Show } from 'solid-js'
 import styles from '~/components/interface/interface.module.scss'
@@ -7,7 +8,7 @@ import Palette from '~/components/palette/palette'
 import { isMobile } from '~/editor/settings'
 
 const Interface: Component = () => {
-  const [showManual, setManual] = createSignal(true)
+  const [showManual, setManual] = makePersisted(createSignal(true))
 
   const toggleManual = () => setManual(value => !value)
  

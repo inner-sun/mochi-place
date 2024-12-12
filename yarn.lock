@@ -1110,6 +1110,18 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/merge-streams/-/merge-streams-2.3.0.tgz#719df7fb41766bc143369eaa0dd56d8dc87c9958"
   integrity sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==
 
+"@solid-primitives/storage@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@solid-primitives/storage/-/storage-4.2.1.tgz#8d6f5bebf81d5fd3d852e9eebe9445f95e90ed42"
+  integrity sha512-1XUJeaSlizH9Eam/+IbIpslHEnggJMNZXzfsr06AlbG6tJtQENMu0+94ZIvooxt4Cyw46wPzcnHYbSK7LzoQAA==
+  dependencies:
+    "@solid-primitives/utils" "^6.2.3"
+
+"@solid-primitives/utils@^6.2.3":
+  version "6.2.3"
+  resolved "https://registry.yarnpkg.com/@solid-primitives/utils/-/utils-6.2.3.tgz#1abed4c74a2696e08bd2e49cf2b86fc8b87a32bd"
+  integrity sha512-CqAwKb2T5Vi72+rhebSsqNZ9o67buYRdEJrIFzRXz3U59QqezuuxPsyzTSVCacwS5Pf109VRsgCJQoxKRoECZQ==
+
 "@solidjs/meta@^0.29.4":
   version "0.29.4"
   resolved "https://registry.yarnpkg.com/@solidjs/meta/-/meta-0.29.4.tgz#28a444db5200d1c9e4e62d8762ea808d3e8beffd"
