@@ -12,6 +12,7 @@ export default createHandler(() => (
           <link rel="icon" type="image/png" href="./assets/images/favicon-32.png" sizes="32x32" />
           <meta property="og:title" content="MochiPlace" />
           <meta name="description" content="Pixel Art from the Mochi Gang" />
+          <meta name="twitter:card" content="summary_large_image" />
           <meta property="og:description" content="Pixel Art from the Mochi Gang" />
           <meta property="og:image" content="https://inner-sun.github.io/mochi-place/assets/images/preview.png" />
           {assets}
