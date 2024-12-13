@@ -1,4 +1,4 @@
-import { editorState } from '~/components/editor/editor'
+import { editorState, setEditor } from '~/components/editor/editor'
 import Canvas from '~/editor/canvas'
 import { Controls, MOUSE } from '~/editor/controls'
 import Pencil from '~/editor/pencil'
@@ -31,8 +31,10 @@ export default class Editor{
     })
     this.changes = []
     this.registerEventListeners()
-    this.init()
-    this.update()
+    this.init().then(() => {
+      setEditor('loading', false)
+      this.update()
+    })
   }
 
   async fetchLatestSnapshot(){
