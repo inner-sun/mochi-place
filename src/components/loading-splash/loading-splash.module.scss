@@ -39,6 +39,7 @@
   opacity: 0;
   transform: scale(1);
   transition: 1s all ease-in-out;
+  pointer-events: none;
   
   &.show{
     opacity: 1;
