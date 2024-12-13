@@ -17,12 +17,11 @@ export class Canvas{
     
     // Read last snapshot on cold start, store it into buffer
     readFile(filePath, (error, fileContent) => {
-      if (error) {
-        if (error.code === 'ENOENT') {
+      if(error){
+        if(error.code === 'ENOENT'){
           const emptyCanvas = new Uint8Array(canvasSize * canvasSize * 3)
           writeFile(filePath, Buffer.from(emptyCanvas), error => console.error(error))
-        }
-        else {
+        }else{
           console.error(error)
         }
       }else{

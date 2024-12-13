@@ -52,7 +52,7 @@ export default class Canvas{
     ]
   }
 
-  applyChanges(changes: Change[]){
+  applyChanges(changes: Change[]) {
     changes.forEach(change => {
       const pencil = change
       const pencilOffset = pencil.size === 1 ? 0 : pencil.size / 2
@@ -61,11 +61,14 @@ export default class Canvas{
 
       for (let y = startY; y < startY + pencil.size; y++) {
         for (let x = startX; x < startX + pencil.size; x++) {
-          const index = (y * canvasSize + x) * 3
-          let colorIndex = colors.findIndex(color => color === change.color)
-          if (colorIndex === -1) colorIndex = 0
-          const packedPixel = packPixel(change.coords.x, change.coords.y, colorIndex)
-          this.buffer.set(packedPixel, index)
+          const isOutOfBounds = x < 0 || x >= canvasSize || y < 0 || y >= canvasSize
+          if (!isOutOfBounds) {
+            const index = (y * canvasSize + x) * 3
+            let colorIndex = colors.findIndex(color => color === change.color)
+            if (colorIndex === -1) colorIndex = 0
+            const packedPixel = packPixel(change.coords.x, change.coords.y, colorIndex)
+            this.buffer.set(packedPixel, index)
+          }
         }
       }
     })
