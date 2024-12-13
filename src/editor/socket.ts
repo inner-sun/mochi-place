@@ -7,11 +7,18 @@ export class Socket{
   editor: Editor
   webSocket: WebSocket
   queue: Uint8Array[]
+  isOnline: null | boolean
 
   constructor(editor: Editor){
     this.editor = editor
     this.webSocket = new WebSocket(import.meta.env.VITE_WEBSOCKET)
     this.queue = []
+    /*
+      null: didnt connect yet
+      true: server is up
+      false: server is down, switch to read-only and retry every 1 minute
+    */
+    this.isOnline = null
 
     this.registerListeners()
     this.loop()
@@ -56,6 +63,10 @@ export class Socket{
     this.queue = []
   }
 
+  onOpen(){
+    this.isOnline = true
+  }
+
   async onReceive(event: MessageEvent){
     const data: Blob = event.data
     const buffer  = await data.arrayBuffer()
@@ -78,6 +89,27 @@ export class Socket{
     this.editor.queueChange(changes)
   }
 
+  retryConnection(){
+    window.location.reload()
+  }
+
+  onError(event: Event){
+    console.error(event)
+  }
+
+  onClose(event: Event){
+    // Only trigger the WS close handler if the user *was* connected
+    // This means the connection crashed
+    // This avoids triggering onClose if the server isn't up at all
+    if(this.isOnline){
+      console.error(event)
+      this.isOnline = false
+      setTimeout(() => {
+        this.retryConnection()
+      }, 60 * 1000)
+    }
+  }
+
   loop(){
     if(this.queue.length > 0){
       this.sendChanges()
@@ -88,7 +120,9 @@ export class Socket{
   }
 
   registerListeners(){
-    this.webSocket.addEventListener('open', () => console.log('Websocket: Connected'))
+    this.webSocket.addEventListener('open', () => this.onOpen())
     this.webSocket.addEventListener('message', (e) => this.onReceive(e))
+    this.webSocket.addEventListener('error', (e) => this.onError(e))
+    this.webSocket.addEventListener('close', (e) => this.onClose(e))
   }
 }
