@@ -13,8 +13,12 @@ const startWebsocketServer = (canvas: Canvas) => {
   const applyChanges = (changes: Uint8Array[]) => {
     changes.forEach(change => {
       const { x, y } = unpackPixel(change)
-      const offset = (y * canvasSize + x) * 3
-      canvas.buffer.set(change, offset)
+
+      const isOutofBounds = x < 0 || x >= canvasSize || y < 0 || y >= canvasSize
+      if (!isOutofBounds) {
+        const offset = (y * canvasSize + x) * 3
+        canvas.buffer.set(change, offset)
+      }
     })
     canvas.save()
   }
