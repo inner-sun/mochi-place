@@ -20,7 +20,11 @@ export class Canvas{
       if(error){
         if(error.code === 'ENOENT'){
           const emptyCanvas = new Uint8Array(canvasSize * canvasSize * 3)
-          writeFile(filePath, Buffer.from(emptyCanvas), error => console.error(error))
+          writeFile(filePath, Buffer.from(emptyCanvas), error => {
+            if(error){
+              console.error(error)
+            }
+          })
         }else{
           console.error(error)
         }
@@ -36,7 +40,11 @@ export class Canvas{
     // Update public snapshot
     const snapshotFile = `snapshot.bin`
     const filePath = `${folder}/${snapshotFile}`
-    writeFile(filePath, Buffer.from(this.buffer), error => console.error(error))
+    writeFile(filePath, Buffer.from(this.buffer), error => {
+      if(error){
+        console.error(error)
+      }
+    })
 
     // If last snapshot is older than 5min, save an timestamped archive
     const now = Date.now()
@@ -44,7 +52,11 @@ export class Canvas{
     if (now - maxDelay > this.lastSnapshot) {
       const snapshotArchiveFile = `snapshot-${now}.bin`
       const archiveFilePath = `${folder}/${snapshotArchiveFile}`
-      writeFile(archiveFilePath, Buffer.from(this.buffer), error => console.error(error))
+      writeFile(archiveFilePath, Buffer.from(this.buffer), error => {
+        if(error){
+          console.error(error)
+        }
+      })
       this.lastSnapshot = now
     }
   }

@@ -1,16 +1,13 @@
 import { editorState, setEditor } from '~/components/editor/editor'
+import { setManual } from '~/components/interface/interface'
 import Canvas from '~/editor/canvas'
 import { Controls, MOUSE } from '~/editor/controls'
 import Pencil from '~/editor/pencil'
 import Point from '~/editor/point'
-import { isMobile } from '~/editor/settings'
+import { canvasSize, isMobile } from '~/editor/settings'
 import { Socket } from '~/editor/socket'
-
-export interface Change{
-  coords: Point
-  color: string
-  size: number
-}
+import { Change } from '~/editor/types/changes'
+import { Status } from '~/editor/types/status'
 
 export default class Editor{
   container: HTMLDivElement
@@ -19,6 +16,7 @@ export default class Editor{
   socket: Socket
   canvas: Canvas
   changes: Change[]
+  readOnly: boolean
 
   constructor(canvasElement: HTMLCanvasElement){
     this.container = canvasElement.parentElement as HTMLDivElement
@@ -30,6 +28,7 @@ export default class Editor{
       editor: this
     })
     this.changes = []
+    this.readOnly = true
     this.registerEventListeners()
     this.init().then(() => {
       setEditor('loading', false)
@@ -42,16 +41,29 @@ export default class Editor{
     const data = await query.arrayBuffer()
     return new Uint8Array(data)
   }
+  
+  async getServerStatus(){
+    const query = await fetch(`${import.meta.env.VITE_API}/api/status`)
+    const data = await query.json() as Status
+    return data.readOnly
+  }
 
   async init(){
+    this.readOnly = await this.getServerStatus()
+    setEditor('readOnly', this.readOnly)
+    if(this.readOnly){
+      setManual(false)
+    }
     const packedPixels = await this.fetchLatestSnapshot()
     this.canvas.updateBuffer(packedPixels)
   }
 
   // TODO: Fix identic changes getting queued
   queueUserChange(change: Change){
-    this.queueChange(change)
-    this.socket.appendChange(change)
+    if(!this.readOnly){
+      this.queueChange(change)
+      this.socket.appendChange(change)
+    }
   }
 
   queueChange(changes: Change | Change[]){

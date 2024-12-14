@@ -1,7 +1,8 @@
 import { colors } from '~/editor/colors'
-import Editor, { Change } from '~/editor/editor'
+import Editor from '~/editor/editor'
 import { packPixel, unpackPixel } from '~/editor/pixels'
 import Point from '~/editor/point'
+import { Change } from '~/editor/types/changes'
 
 export class Socket{
   editor: Editor
@@ -104,9 +105,7 @@ export class Socket{
     if(this.isOnline){
       console.error(event)
       this.isOnline = false
-      setTimeout(() => {
-        this.retryConnection()
-      }, 60 * 1000)
+      this.retryConnection()
     }
   }
 

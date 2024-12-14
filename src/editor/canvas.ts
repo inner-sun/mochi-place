@@ -1,8 +1,9 @@
 import { colors } from '~/editor/colors'
 import { MOUSE } from '~/editor/controls'
-import Editor, { Change } from '~/editor/editor'
+import Editor from '~/editor/editor'
 import { createImageData, packPixel } from '~/editor/pixels'
 import { canvasSize } from '~/editor/settings'
+import { Change } from '~/editor/types/changes'
 
 interface CanvasProps{
   canvasElement: HTMLCanvasElement

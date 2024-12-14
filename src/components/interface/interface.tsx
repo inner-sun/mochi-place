@@ -1,14 +1,16 @@
 import { makePersisted } from '@solid-primitives/storage'
-import { TbHelp } from 'solid-icons/tb'
+import { TbHelp, TbPlayerPauseFilled } from 'solid-icons/tb'
 import { Component, createSignal, Show } from 'solid-js'
+import { editorState } from '~/components/editor/editor'
 import styles from '~/components/interface/interface.module.scss'
 import MobileInterface from '~/components/interface/mobile-interface'
 import Manual from '~/components/manual/manual'
 import Palette from '~/components/palette/palette'
 import { isMobile } from '~/editor/settings'
 
+export const [showManual, setManual] = makePersisted(createSignal(true))
+
 const Interface: Component = () => {
-  const [showManual, setManual] = makePersisted(createSignal(true))
 
   const toggleManual = () => setManual(value => !value)
  
@@ -25,7 +27,17 @@ const Interface: Component = () => {
             <span>MochiPlace</span>
           </div>
 
-          <Palette />
+          <Show
+            when={!editorState.readOnly}
+            fallback={(
+              <div class={styles.paused}>
+                <TbPlayerPauseFilled class={styles.icon} />
+                <span>En pause</span>
+              </div>
+            )}
+          >
+            <Palette />
+          </Show>
 
           <button
             class={styles.button}

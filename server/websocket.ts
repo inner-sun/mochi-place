@@ -2,8 +2,9 @@ import { WebSocketServer } from 'ws'
 import { unpackPixel } from '~/editor/pixels'
 import { canvasSize } from '~/editor/settings'
 import { Canvas } from './canvas'
+import { Status } from '~/editor/types/status'
 
-const startWebsocketServer = (canvas: Canvas) => {
+const startWebsocketServer = (canvas: Canvas, status: Status) => {
   const wss = new WebSocketServer({ port: 8080, host: '0.0.0.0' })
 
   const queue: Uint8Array[] = []
@@ -21,6 +22,12 @@ const startWebsocketServer = (canvas: Canvas) => {
       }
     })
     canvas.save()
+  }
+
+  const kickAllUsers = () => {
+    wss.clients.forEach(client => {
+      client.close()
+    })
   }
 
   const updateUsers = () => {
@@ -58,24 +65,30 @@ const startWebsocketServer = (canvas: Canvas) => {
   }, broadcastingInterval)
 
   wss.on('connection', (ws) => {
-    console.log('[WS] New User')
+    console.log(`[WS] New User | Currently ${wss.clients.size} users`)
+    status.players = wss.clients.size
 
     ws.on('error', console.error)
 
     // On User update
     ws.on('message', (data) => {
-      // unpack pixels from data
-      // queue them to changes waiting to be broadcast
-      const packedChanges = new Uint8Array(data as Buffer)
-      console.log('[WS] Received packed pixels', packedChanges.length / 3)
-      for (let i = 0; i < packedChanges.length; i += 3) {
-        const packedPixel = packedChanges.slice(i, i + 3)
-        queue.push(packedPixel)
+      if (!status.readOnly){
+        // unpack pixels from data
+        // queue them to changes waiting to be broadcast
+        const packedChanges = new Uint8Array(data as Buffer)
+        console.log('[WS] Received packed pixels', packedChanges.length / 3)
+        for (let i = 0; i < packedChanges.length; i += 3) {
+          const packedPixel = packedChanges.slice(i, i + 3)
+          queue.push(packedPixel)
 
-        // Broadcast changes if queue length exceeds 256
-        if (queue.length > 256) {
-          updateUsers()
+          // Broadcast changes if queue length exceeds 256
+          if (queue.length > 256) {
+            updateUsers()
+          }
         }
+      }else{
+        // Disconnect everyone
+        kickAllUsers()
       }
     })
   })

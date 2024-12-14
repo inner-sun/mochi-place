@@ -10,7 +10,8 @@ export const [editorState, setEditor] = createStore({
   primaryColor: colors[1],
   secondaryColor: colors[0],
   size: 1,
-  loading: true
+  loading: true,
+  readOnly: true
 })
 
 const Editor: Component = () => {
