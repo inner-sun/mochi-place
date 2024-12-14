@@ -27,7 +27,7 @@ const Manual: Component<ManualProps> = ({ setManual }) => {
           />
         </li>
         <li>
-          <span class={styles.shortcut}>Clic Gauche</span>
+          <span class={styles.shortcut}>Clic Droit</span>
           Peindre la couleur secondaire 
           <TbCaretDown
             class={styles.symbol}
