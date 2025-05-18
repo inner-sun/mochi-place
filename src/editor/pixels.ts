@@ -1,3 +1,4 @@
+import { ImageData } from 'canvas'
 import { colors, hexToRgb } from '~/editor/colors'
 
 const packPixel = (x: number, y: number, colorIndex: number) => {
